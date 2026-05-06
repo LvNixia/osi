@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initCounters();
     initLayerStack();
+    initHeroTower();
     initQuiz();
 });
 
@@ -263,6 +264,23 @@ function initLayerStack() {
 
     // Also try loading from PHP API
     fetchLayerFromPHP();
+}
+
+function initHeroTower() {
+    const towerLayers = document.querySelectorAll('.tower-layer');
+    towerLayers.forEach(el => {
+        el.addEventListener('click', () => {
+            const layerNum = parseInt(el.dataset.layer);
+            const layerData = OSI_LAYERS_DATA.find(l => l.number === layerNum);
+            if (layerData) {
+                showLayerDetail(layerData);
+                const layersSection = document.getElementById('layers');
+                if (layersSection) {
+                    layersSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
 }
 
 function showLayerDetail(layer) {
